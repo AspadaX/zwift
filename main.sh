@@ -58,7 +58,13 @@ fi
 PROJECT_NAME=$(basename "$XCODEPROJ_PATH" .xcodeproj)
 
 cd "$PROJECT_PATH"
-xcode-build-server config -project "$PROJECT_NAME.xcodeproj"
+
+# Check if buildServer.json exists in the project root
+if [ -f "buildServer.json" ]; then
+    echo "buildServer.json already exists in the project root. Skipping creation."
+else
+    xcode-build-server config -project "$PROJECT_NAME.xcodeproj"
+fi
 
 # ==========================================
 # Setting up Zed
